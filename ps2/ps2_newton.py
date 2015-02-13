@@ -78,5 +78,16 @@ def compute_root(poly, x_0, epsilon):
     epsilon: float > 0
     returns: tuple (float, int)
     """
-    # TO DO ... 
+    # TO DO ...
+    guess = x_0
+    iteration = 0
+    while True:
+        iteration += 1
+        test_root = evaluate_poly(poly, guess)
+        poly_derivative = compute_deriv(poly)
+        if abs(test_root) < epsilon:
+            return (format(test_root, '.10f'), iteration)
+        else:
+            guess = guess - test_root / evaluate_poly(poly_derivative, guess)
 
+print compute_root((-13.39, 0.0, 17.5, 3.0, 1.0), 0.1, .0001)
