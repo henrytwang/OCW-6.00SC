@@ -276,14 +276,16 @@ def play_game(word_list):
     * If the user inputs anything else, ask them again.
     """
     # TO DO...
-    hand = deal_hand(3)
+    hand = {}
+    backup = {}
     while True:
         choice = raw_input("Input 'n' for a random hand, 'r' to replay your last hand, or 'e' to exit.")
         if choice is 'n':
             hand = deal_hand(3)
+            backup = deepcopy(hand)
             play_hand(hand, word_list)
         elif choice is 'r':
-            play_hand(hand, word_list)
+            play_hand(deepcopy(backup), word_list)
         elif choice is 'e':
             exit()
         else:
