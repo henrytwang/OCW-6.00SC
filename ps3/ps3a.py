@@ -298,4 +298,3 @@ if __name__ == '__main__':
     word_list = load_words()
     play_game(word_list)
 
-# play_hand(deal_hand(3), word_list)
