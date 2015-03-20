@@ -17,7 +17,7 @@ def comp_choose_word(hand, word_list):
     word_list: list (string)
     """
     # TO DO...
-    best_word = ""
+    best_word = None
     best_word_score = 0
     for word_size in range(1, len(hand) + 1):
         permutations = get_perms(hand, word_size)
@@ -53,8 +53,17 @@ def comp_play_hand(hand, word_list):
      word_list: list (string)
     """
     # TO DO ...
+    score = 0
+    display_hand(hand)
     chosen_word = comp_choose_word(hand, word_list)
-
+    print "chosen word is ", chosen_word
+    score += get_word_score(chosen_word, len(hand))
+    while chosen_word:
+        hand = update_hand(hand, chosen_word)
+        display_hand(hand)
+        chosen_word = comp_choose_word(hand, word_list)
+        print "chosen word is ", chosen_word
+    print "The computer's score is ", score
 #
 # Problem #6C: Playing a game
 #
@@ -78,6 +87,27 @@ def play_game(word_list):
     word_list: list (string)
     """
     # TO DO...
+    hand = {}
+    backup = {}
+    while True:
+        first_choice = raw_input("Input 'n' for a random hand, 'r' to replay your last hand, or 'e' to exit.")
+        if first_choice is 'e':
+            exit()
+        second_choice = raw_input("Input 'u' to play as yourself or 'c' to let the computer play.")
+        if first_choice is 'n':
+            hand = deal_hand(7)
+            backup = deepcopy(hand)
+            if second_choice is 'u':
+                play_hand(hand, word_list)
+            elif second_choice is 'c':
+                comp_play_hand(hand, word_list)
+        elif first_choice is 'r':
+            if second_choice is 'u':
+                play_hand(deepcopy(backup), word_list)
+            elif second_choice is 'c':
+                comp_play_hand(deepcopy(backup), word_list)
+        else:
+            continue
 
 
 #
@@ -85,4 +115,6 @@ def play_game(word_list):
 #
 if __name__ == '__main__':
     word_list = load_words()
+    # play_game(word_list)
     play_game(word_list)
+
